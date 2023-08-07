@@ -79,7 +79,7 @@
           </div>
 
           {#if !intersecting}
-          <div transition:slide class="note bg-btn flex justify-center items-center font-btn text-white h-20 p-5 rounded">
+          <div transition:slide class="note bg-btn flex justify-center items-center font-btn text-white  p-5 rounded">
             <p>Please scroll down to see your orders</p>
           </div>
           {/if}
@@ -117,8 +117,8 @@
   .note{
     position: fixed;
     z-index: 10;
-    top: 50%;
+    top: 20%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-20%, -50%);
   }
 </style>
