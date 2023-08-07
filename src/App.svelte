@@ -10,6 +10,8 @@
   import sprite from "../public/images/sprite.png";
   import OrderStore from "./Stores/orders";
   import Message from "./components/Message.svelte";
+  import IntersectionObserver from "svelte-intersection-observer";
+  import { slide } from "svelte/transition";
 
   let foodDetails = [
     {
@@ -42,12 +44,13 @@
   let isFormVisible = false;
   $: storeVisible = $OrderStore.length >= 1 ? true : false;
   let messageVisible = false;
-    let userName
-  function handlePay(e){
-    userName = e.detail
-    messageVisible = true
+  let userName;
+  function handlePay(e) {
+    userName = e.detail;
+    messageVisible = true;
   }
 
+  let note;
 </script>
 
 <main
@@ -65,13 +68,24 @@
         />
       {/each}
 
-      {#if storeVisible}
-        <OrderList
-          on:click={() => {
-            isFormVisible = true;
-          }}
-        />
-      {/if}
+      <IntersectionObserver element={note} let:intersecting rootMargin= '-100px'>
+        {#if storeVisible}
+          <div bind:this={note}>
+            <OrderList
+              on:click={() => {
+                isFormVisible = true;
+              }}
+            />
+          </div>
+
+          {#if !intersecting}
+          <div transition:slide class="note bg-btn flex justify-center items-center font-btn text-white h-20 p-5 rounded">
+            <p>Please scroll down to see your orders</p>
+          </div>
+          {/if}
+    
+        {/if}
+      </IntersectionObserver>
 
       {#if isFormVisible && storeVisible}
         <div class="overlay" />
@@ -79,11 +93,14 @@
       {/if}
     </div>
 
-  {#if messageVisible}
-     <Message {userName} on:click={()=>{
-      messageVisible = false;
-     }} />
-  {/if}
+    {#if messageVisible}
+      <Message
+        {userName}
+        on:click={() => {
+          messageVisible = false;
+        }}
+      />
+    {/if}
   </Card>
 </main>
 
@@ -95,5 +112,13 @@
     width: 100%;
     height: 100%;
     background-color: rgb(131, 129, 129, 0.5);
+  }
+
+  .note{
+    position: fixed;
+    z-index: 10;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 </style>
