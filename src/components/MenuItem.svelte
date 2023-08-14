@@ -62,6 +62,13 @@
         () => {
         pressed = false;
       }
+      
+      }
+
+      on:mouseleave = {
+        ()=>{
+          pressed = false
+        }
       }
       class="cross p-[8px] rounded-[50%] border-[1px] border-lineCol border-solid flex justify-center items-center cursor-pointer"
       class:down={pressed}
@@ -79,7 +86,7 @@
   }
 
   .down {
-    transform: scale(0.8);
+    transform: scale(0.7);
   }
   /* your styles go here */
 </style>
