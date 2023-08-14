@@ -5,7 +5,7 @@
   // export let foodPrice;
   // export let foodIng;
   // export let foodId
-   const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher();
   export let food;
   import cross from "../../public/images/cross.svg";
   import OrderStore from "../Stores/orders";
@@ -18,11 +18,12 @@
         ...copyFood,
       };
       return [copyFood, ...currentOrder];
-
     });
 
-    dispatch('add', food)
+    dispatch("add", food);
   }
+
+  let pressed = false;
 </script>
 
 <div class="flex flex-col gap-7">
@@ -53,7 +54,17 @@
       on:click={() => {
         handleAdd(food);
       }}
-      class="p-[8px] rounded-[50%] border-[1px] border-lineCol border-solid flex justify-center items-center cursor-pointer"
+      on:mousedown={() => {
+        pressed = true;
+      }}
+
+      on:mouseup = {
+        () => {
+        pressed = false;
+      }
+      }
+      class="cross p-[8px] rounded-[50%] border-[1px] border-lineCol border-solid flex justify-center items-center cursor-pointer"
+      class:down={pressed}
     >
       <img src={cross} alt="" />
     </div>
@@ -63,5 +74,12 @@
 </div>
 
 <style>
+  .cross {
+    transition: 0.1s;
+  }
+
+  .down {
+    transform: scale(0.8);
+  }
   /* your styles go here */
 </style>
