@@ -54,7 +54,7 @@
 </script>
 
 <main
-  class="flex w-[100%] justify-center items-center min-h-[100vh] font-body py-20 px-[6px]"
+  class="relative flex w-[100%] justify-center items-center min-h-[100vh] font-body py-20 px-[6px]"
 >
   <Card myStyle="">
     <Header />
@@ -68,7 +68,7 @@
         />
       {/each}
 
-      <IntersectionObserver element={note} let:intersecting rootMargin= '-100px'>
+      <IntersectionObserver element={note} let:intersecting rootMargin="-100px">
         {#if storeVisible}
           <div bind:this={note}>
             <OrderList
@@ -79,11 +79,13 @@
           </div>
 
           {#if !intersecting}
-          <div transition:slide class="note bg-btn flex justify-center items-center font-btn text-white  p-5 rounded">
-            <p>Please scroll down to see your orders</p>
-          </div>
+            <div
+              transition:slide
+              class="note bg-btn flex justify-center items-center font-btn text-white p-5 rounded"
+            >
+              <p>Please scroll down to see your orders</p>
+            </div>
           {/if}
-    
         {/if}
       </IntersectionObserver>
 
@@ -102,6 +104,12 @@
       />
     {/if}
   </Card>
+
+  <p class="absolute bottom-3 text-fontCol">
+    Built with ❤ by <a class="underline" href="https://twitter.com/t3ch_spawn"
+      >Boluwatife</a
+    >
+  </p>
 </main>
 
 <style>
@@ -114,7 +122,7 @@
     background-color: rgb(131, 129, 129, 0.5);
   }
 
-  .note{
+  .note {
     position: fixed;
     z-index: 10;
     top: 20%;
